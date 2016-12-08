@@ -1,4 +1,5 @@
 import matplotlib
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
@@ -44,6 +45,10 @@ def measure_performance(classifier, X_test, y_test, name, performances):
     performances[name]['accuracy'].append(accuracy_score(y_test, prediction))
     performances[name]['f1'].append(f1_score(y_test, prediction))
     performances[name]['roc_auc'].append(roc_auc_score(y_test, prediction))
+
+
+def train_classifier(kf_split, ):
+    pass
 
 
 # noinspection PyPep8Naming
@@ -93,7 +98,7 @@ def main():
         # naive bayes
         nb = GaussianNB()
         nb.fit(X_train, y_train)
-        measure_performance(rf, X_test, y_test, 'nb', performances)
+        measure_performance(nb, X_test, y_test, 'nb', performances)
 
         # logistic regression
         lr = tune_hyper_parameter(LogisticRegression(), {'C': [1e-02, 1e-01, 1e00, 1e01, 1e02]}, X_train, y_train)
