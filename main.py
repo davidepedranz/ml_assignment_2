@@ -212,7 +212,7 @@ def print_performances_latex(classifier, performances):
     print(
         "\\begin{table}\n" +
         "\t\\centering\n" +
-        "\t\caption{" + classifier + "' performances}\n" +
+        "\t\caption{Performances of " + classifier + "}\n" +
         "\t\label{tab:" + classifier.lower().replace(" ", "_") + "}\n" +
         "\t\\begin{tabular}{cccc}"
     )
