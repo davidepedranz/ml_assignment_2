@@ -12,6 +12,45 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 
 
+def main():
+    """
+    Compare the performances of SVM, Random Forest and Naive Bayes
+    on a randomly generated classification problem.
+    """
+
+    # experiment parameters
+    m = 5000
+    seed = 3324087230
+    k = 10
+
+    # generate the samples to work with
+    X, y = generate_data(m, seed)
+
+    # train Naive Bayes
+    nb = GaussianNB()
+    nb_parameters = {}
+    nb_performances = train_classifier("Naive Bayes", nb, nb_parameters, data=(X, y), seed=seed, k=k, plot=False)
+    print_performances("Naive Bayes", nb_performances)
+
+    # train SVM
+    svm = SVC(kernel="rbf", class_weight="balanced")
+    svm_parameters = {"C": [0.01, 0.033, 0.1, 0.33, 1, 3.33, 10, 33, 100]}
+    svm_performances = train_classifier("SVM", svm, svm_parameters, data=(X, y), seed=seed, k=k, plot=True)
+    print_performances("SVM", svm_performances)
+
+    # train Random Forest
+    rf = RandomForestClassifier(random_state=seed)
+    rf_parameters = {"n_estimators": [10, 100, 1000]}
+    rf_performances = train_classifier("Random Forest", rf, rf_parameters, data=(X, y), seed=seed, k=k, plot=True)
+    print_performances("Random Forest", rf_performances)
+
+    # train Neural Network
+    nn = MLPClassifier(hidden_layer_sizes=50, activation='logistic', random_state=seed)
+    nn_parameters = {"max_iter": [1000]}
+    nn_performances = train_classifier("Neural Network", nn, nn_parameters, data=(X, y), seed=seed, k=k, plot=False)
+    print_performances("Neural Network", nn_performances)
+
+
 def generate_data(m, seed):
     """
     Generate a new classification problem with 2 classes and a lot of feature.
@@ -202,45 +241,6 @@ def print_performances_latex(classifier, performances):
         "\t\\end{tabular}\n" +
         "\\end{table}\n"
     )
-
-
-def main():
-    """
-    Compare the performances of SVM, Random Forest and Naive Bayes
-    on a randomly generated classification problem.
-    """
-
-    # experiment parameters
-    m = 5000
-    seed = 3324087230
-    k = 10
-
-    # generate the samples to work with
-    X, y = generate_data(m, seed)
-
-    # train Naive Bayes
-    nb = GaussianNB()
-    nb_parameters = {}
-    nb_performances = train_classifier("Naive Bayes", nb, nb_parameters, data=(X, y), seed=seed, k=k, plot=False)
-    print_performances("Naive Bayes", nb_performances)
-
-    # train SVM
-    svm = SVC(kernel="rbf", class_weight="balanced")
-    svm_parameters = {"C": [0.01, 0.033, 0.1, 0.33, 1, 3.33, 10, 33, 100]}
-    svm_performances = train_classifier("SVM", svm, svm_parameters, data=(X, y), seed=seed, k=k, plot=True)
-    print_performances("SVM", svm_performances)
-
-    # train Random Forest
-    rf = RandomForestClassifier(random_state=seed)
-    rf_parameters = {"n_estimators": [10, 100, 1000]}
-    rf_performances = train_classifier("Random Forest", rf, rf_parameters, data=(X, y), seed=seed, k=k, plot=True)
-    print_performances("Random Forest", rf_performances)
-
-    # train Neural Network
-    nn = MLPClassifier(hidden_layer_sizes=50, activation='logistic', random_state=seed)
-    nn_parameters = {"max_iter": [1000]}
-    nn_performances = train_classifier("Neural Network", nn, nn_parameters, data=(X, y), seed=seed, k=k, plot=False)
-    print_performances("Neural Network", nn_performances)
 
 
 # main entry point
