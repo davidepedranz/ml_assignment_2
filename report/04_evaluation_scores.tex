@@ -1,0 +1,16 @@
+\section{Evaluation Scores}
+\label{sec:scores}
+
+An important phase of the learning process is the evaluation.
+After training an algorithm, we want to measure how good it is performing.
+These measures are used for both the selection of the best learning algorithm on the given problem and the choice of its hyperparameters. Commonly used ones are:
+\begin{itemize}
+    \item Accuracy,
+    \item F1-score,
+    \item AUC ROC.
+\end{itemize}
+
+The accuracy score focuses on the correct predicted samples, whereas F1 and AUC ROC scores take into account both the correct and wrong predicted ones.
+They can be combined to obtain more robust measures.
+
+All these metrics are provided by \texttt{Scikit-Learn} in the \texttt{sklearn.metrics} package.

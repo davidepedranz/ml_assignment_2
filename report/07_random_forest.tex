@@ -1,0 +1,37 @@
+\section{Random Forest}
+\label{sec:random_forest}
+
+Random Forest is an enseble learning method that combines multiple Decision Trees.
+The aim is to reduce the variance of each tree and thus better generealize on new examples.
+A specified number of Decision Trees are learned in a sequence and combined togheter.
+The resulting prediction of the Random Forest is simply the average of the prediction of all trees.
+
+\begin{table}
+	\centering
+	\caption{Performances of Random Forest}
+	\label{tab:random_forest}
+	\begin{tabular}{cccc}
+		\toprule
+			\multicolumn{1}{c}{k-fold} &
+			\multicolumn{1}{c}{Accuracy} &
+			\multicolumn{1}{c}{F1} &
+			\multicolumn{1}{c}{AUC ROC} \\
+		\midrule
+			  1  & 0.936 & 0.936 & 0.936 \\
+			  2  & 0.940 & 0.941 & 0.940 \\
+			  3  & 0.958 & 0.958 & 0.959 \\
+			  4  & 0.944 & 0.947 & 0.944 \\
+			  5  & 0.948 & 0.950 & 0.948 \\
+			  6  & 0.968 & 0.967 & 0.968 \\
+			  7  & 0.938 & 0.942 & 0.937 \\
+			  8  & 0.950 & 0.947 & 0.952 \\
+			  9  & 0.950 & 0.953 & 0.949 \\
+			 10  & 0.946 & 0.944 & 0.946 \\[2pt]
+			\hline
+			 avg & 0.948 & 0.948 & 0.948 \Tstrut\Bstrut\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The performances of Random Forest are reported in table \cref{tab:random_forest}.
+It scored on average $0.948$ on each indicator, perfoming slightly worse then \ac{SVM} but much better than Naive Bayes.

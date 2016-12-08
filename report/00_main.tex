@@ -1,0 +1,78 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{silence}\WarningsOff[latexfont]
+
+\usepackage{amsmath}
+
+\RequirePackage{tikz}[2010/10/13]
+\usetikzlibrary{arrows,automata,calc,intersections,patterns,decorations.pathmorphing,decorations.pathreplacing}
+
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage[binary-units,per-mode=symbol]{siunitx}
+\sisetup{list-final-separator = {, and }}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{microtype}
+\usepackage{textcomp}
+\usepackage[american]{babel}
+\usepackage[noabbrev,capitalise]{cleveref}
+\usepackage{xspace}
+\usepackage{hyphenat}
+\usepackage[draft,inline,nomargin,index]{fixme}
+\fxsetup{theme=color}
+\usepackage{grffile}
+\usepackage{xfrac}
+\usepackage{multirow}
+\RequirePackage{xstring}
+\RequirePackage{xparse}
+\RequirePackage[index=true]{acro}
+
+\NewDocumentCommand\acrodef{mO{#1}mG{}}{\DeclareAcronym{#1}{short={#2}, long={#3}, #4}}
+\NewDocumentCommand\acused{m}{\acuse{#1}}
+
+\usepackage{upquote}
+
+\DeclareMathOperator*{\argmax}{arg\!\max}
+
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-0.9ex]{0pt}{0pt}}   % = `bottom' strut
+
+\acrodef{SVM}{Support Vector Machine}
+
+
+\begin{document}
+
+\title{Assignment 2 - Scikit-Learn}
+\author{
+	\IEEEauthorblockN{Davide Pedranz (189295)}
+	\texttt{davide.pedranz@studenti.unitn.it}
+}
+
+\maketitle
+
+\begin{abstract}
+Scikit-Learn is a simple and powerful library to do Machine Learning in Python.
+In this assignment, we will use Scikit-Learn to compare the performances of the Naive Bayes, Support Vector Machine and Random Forest learning algorithms on a binary classification problem.
+\end{abstract}
+
+\acresetall
+
+% various sections
+\input{01_introduction}
+\input{02_learning_problem}
+\input{03_k_fold_cross_validation}
+\input{04_evaluation_scores}
+\input{05_naive_bayes}
+\input{06_svm}
+\input{07_random_forest}
+\input{08_conclusion}
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}
+
+\end{document}

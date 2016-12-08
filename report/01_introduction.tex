@@ -1,0 +1,20 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Machine Learning techniques allow to extract knowledge from training data and use it to classify or predict new examples.
+There are different learning algorithms for different problems.
+In this assignment, we will focus on the classification problem.
+In particular, we will run the following algorithms and compare their performances:
+\begin{itemize}
+    \item Naive Bayes,
+    \item Support Vector Machine,
+    \item Random Forest.
+\end{itemize}
+
+Most algorithm require to set some parameters in advance, before the learning phase.
+These parameters are called hyperparameters.
+It is usually tricky to choose this parameters in advance, so a common way to overcome this problem is to use a part of the training data to tune their values.
+We used the process called k-fold cross validation, which is described in \cref{sec:k_fold_cross_validation}.
+
+We use the Python library \texttt{Scikit-Learn}\footnote{\url{http://scikit-learn.org/}}.
+Scikit-Learn implement most of the commonly used Machine Learning algorithms and provides utilities to generate learning problems, split the data and measure the performances.

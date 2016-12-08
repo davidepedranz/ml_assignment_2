@@ -1,0 +1,40 @@
+\section{Support Vector Machine}
+\label{sec:svm}
+
+The \ac{SVM} algorithm tries to find the hyperplane which linearly separates the two classes with the highest margin.
+In the simpler implementation, it uses the standard dot product to measure the similarity between two points.
+It is also possibile to use a different function, denominated kernel, as similarity function.
+This allows to tranform the features space and perform a linear separation in the new space.
+The result is a non linear separation in the original space. with a shape that depends on the used kernel.
+In this case, we used the popular Gaussian radial basis function kernel.
+
+\begin{table}
+	\centering
+	\caption{Performances of SVM}
+	\label{tab:svm}
+	\begin{tabular}{cccc}
+		\toprule
+			\multicolumn{1}{c}{k-fold} &
+			\multicolumn{1}{c}{Accuracy} &
+			\multicolumn{1}{c}{F1} &
+			\multicolumn{1}{c}{AUC ROC} \\
+		\midrule
+			  1  & 0.970 & 0.969 & 0.970 \\
+			  2  & 0.972 & 0.972 & 0.972 \\
+			  3  & 0.984 & 0.984 & 0.984 \\
+			  4  & 0.966 & 0.967 & 0.966 \\
+			  5  & 0.968 & 0.969 & 0.968 \\
+			  6  & 0.980 & 0.979 & 0.980 \\
+			  7  & 0.970 & 0.971 & 0.970 \\
+			  8  & 0.972 & 0.970 & 0.972 \\
+			  9  & 0.972 & 0.974 & 0.972 \\
+			 10  & 0.966 & 0.965 & 0.966 \\[2pt]
+			\hline
+			 avg & 0.972 & 0.972 & 0.972 \Tstrut\Bstrut\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The performances of this algorithm are reported in \cref{tab:svm}.
+Both the accuracy, F1 and AUC ROC scores are very high: $0.972$.
+\ac{SVM} was able to discriminate very well the samples and performed much better than Naive Bayes.

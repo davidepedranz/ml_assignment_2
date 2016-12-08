@@ -1,0 +1,30 @@
+\section{k-fold cross validation}
+\label{sec:k_fold_cross_validation}
+
+Two common problems of the learning algorithms are underfitting and overfitting.
+The former appears when the model is too generic to accurately fit the data, the latter means that the model is too complex that perfectly fit training data but fail to generalize on new examples.
+Most algorithm has some hyperparameter that allow to specify the complexity of the model to use or the regularization term, tuning the trade-off between underfitting and overfitting.
+
+Hyperparameters make the learning algorithms very flexible but also difficult to use, since their choice is not trivial.
+An obvious solution is to use a part of the available training examples to tune those parameters.
+The training set is split in two parts, the first one used for the training, while the second one for the validation.
+In other works, a different classifier is trained for each combination of hyperparameters, then the one performing better on the validation set is selected. 
+This approach has the downside of ``wasting'' a significant part of the available examples.
+
+The k-fold cross validation technique allow to obtain a similar result without wast of training examples.
+The training set is randomly partitioned in $k$ equal sized sets.
+For each combination of hyperparameters, $k$ different learners are trained, each time taking as training set the union of all partitions except the $k\textsuperscript{th}$ one.
+The $k\textsuperscript{th}$ partition is used to test the performances of the $k\textsuperscript{th}$ learner.
+The performances of the $k$ learners are then averaged and the best one is selected.
+Finally, the best learner is trained on the entire training set using its hyperparameters.
+The real performances are measured on the test set, which was never used before, neither for the learning nor for the hyperparameters choice.
+This guarantees that the choice of the hyperparameters is not baised.
+
+The same technique can be used in a similar way to get a higher confidence when comparing different algorithms.
+This time, the entire dataset is partitioned in $k$ subset.
+For each $k$, a learner for each algorithm is trained on $k-1$ folds and tested on the last one.
+The performances are collected for each $k$ and then averaged for each algorithm.
+The means are used to compare the learning algorithms, so that the comparison does not dependent on a single random split of the data.
+In fact, an algorithm could perform well on a certain split, whereas a second one could perform much better on a different one.
+
+The described tecniques is commonly used in many Machine Learning problems where the available examples are limited.

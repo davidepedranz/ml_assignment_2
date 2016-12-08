@@ -1,0 +1,37 @@
+\section{Naive Bayes}
+\label{sec:naive_bayes}
+
+The Naive Bayes classification algorithm tries to model the probabilistic structure of the dataset under the assumption that every feature is indipendent on each other given the class.
+The predicted class is the one that maximizes the probability of having the given configuration.
+
+For this specific classification problem quite bad.
+In fact, all scores are around $0.75$.
+The details can be found in \cref{tab:naive_bayes}.
+The bad performances are probably due to the presence of redundant and repeated features, which break the conditional indipendence assumption of the algorithm.
+
+\begin{table}
+	\centering
+	\caption{Performances of Naive Bayes}
+	\label{tab:naive_bayes}
+	\begin{tabular}{cccc}
+		\toprule
+			\multicolumn{1}{c}{k-fold} &
+			\multicolumn{1}{c}{Accuracy} &
+			\multicolumn{1}{c}{F1} &
+			\multicolumn{1}{c}{AUC ROC} \\
+		\midrule
+			  1  & 0.786 & 0.802 & 0.787 \\
+			  2  & 0.744 & 0.758 & 0.744 \\
+			  3  & 0.764 & 0.773 & 0.765 \\
+			  4  & 0.764 & 0.785 & 0.761 \\
+			  5  & 0.764 & 0.785 & 0.763 \\
+			  6  & 0.778 & 0.791 & 0.780 \\
+			  7  & 0.748 & 0.771 & 0.745 \\
+			  8  & 0.738 & 0.747 & 0.746 \\
+			  9  & 0.742 & 0.774 & 0.736 \\
+			 10  & 0.734 & 0.750 & 0.738 \\[2pt]
+			\hline
+			 avg & 0.756 & 0.774 & 0.756 \Tstrut\Bstrut\\
+		\bottomrule
+	\end{tabular}
+\end{table}
