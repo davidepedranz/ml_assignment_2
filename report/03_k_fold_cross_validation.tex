@@ -18,7 +18,7 @@ The $k\textsuperscript{th}$ partition is used to test the performances of the $k
 The performances of the $k$ learners are then averaged and the best one is selected.
 Finally, the best learner is trained on the entire training set using its hyperparameters.
 The real performances are measured on the test set, which was never used before, neither for the learning nor for the hyperparameters choice.
-This guarantees that the choice of the hyperparameters is not baised.
+This guarantees that the choice of the hyperparameters is not biased.
 
 The same technique can be used in a similar way to get a higher confidence when comparing different algorithms.
 This time, the entire dataset is partitioned in $k$ subset.
@@ -27,4 +27,4 @@ The performances are collected for each $k$ and then averaged for each algorithm
 The means are used to compare the learning algorithms, so that the comparison does not dependent on a single random split of the data.
 In fact, an algorithm could perform well on a certain split, whereas a second one could perform much better on a different one.
 
-The described tecniques is commonly used in many Machine Learning problems where the available examples are limited.
+The described techniques is commonly used in many Machine Learning problems where the available examples are limited.
