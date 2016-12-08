@@ -6,20 +6,20 @@ import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.model_selection import KFold, GridSearchCV
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
+from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 
 
-def generate_data(seed):
+def generate_data(m, seed):
     """
     Generate a new classification problem with 2 classes and a lot of feature.
+    :param m: Number of samples to generate.
     :param seed: Seed to use for the random generator.
     :return: Pair (X, y) of features and classes.
     """
-    m = 5000
-    X, y = make_classification(n_samples=m, n_features=15, n_informative=12, n_redundant=2, n_repeated=1,
+    X, y = make_classification(n_samples=m, n_features=15, n_informative=10, n_redundant=2, n_repeated=1,
                                n_classes=2, random_state=seed)
     return X, y
 
@@ -125,9 +125,9 @@ def print_performances(classifier, performances):
     separator = "------+----------+--------+---------"
 
     # the classifier
-    print("\n-----------------------------------------")
+    print("\n----------------------------------------------")
     print(" Performances for: " + classifier)
-    print("-----------------------------------------\n")
+    print("----------------------------------------------\n")
 
     # header
     print(separator)
@@ -143,6 +143,66 @@ def print_performances(classifier, performances):
     print(mean_format.format(np.mean(accuracy), np.mean(f1), np.mean(roc_auc)))
     print(separator + "\n")
 
+    # print also the table for LaTeX
+    print_performances_latex(classifier, performances)
+
+    # separator
+    print("---------------------------------------------------\n")
+
+
+def print_performances_latex(classifier, performances):
+    """
+    Print the performances of a 10-fold cross validation as LaTeX code.
+    :param classifier: Classifier type used to obtain the performances.
+    :param performances: Tuple of ist of accuracy scores, F1 scores and ROC AUC scores.
+    """
+
+    # extract the performances of this classifier
+    accuracy, f1, roc_auc = performances
+
+    # make sure the input is correct
+    l1, l2, l3 = len(accuracy), len(f1), len(roc_auc)
+    assert l1 == l2 == l3
+
+    # print each row in this format, so that to make a table
+    columns = " {:0.3f} & {:0.3f} & {:0.3f}"
+    row_format = "\t\t\t {:2d}  &" + columns + " \\\\"
+    mean_format = "\t\t\t avg &" + columns + " \Tstrut\Bstrut\\\\"
+
+    # table start
+    print(
+        "\\begin{table}\n" +
+        "\t\\centering\n" +
+        "\t\caption{" + classifier + "' performances}\n" +
+        "\t\label{tab:" + classifier.lower().replace(" ", "_") + "}\n" +
+        "\t\\begin{tabular}{cccc}"
+    )
+
+    # header
+    print(
+        "\t\t\\toprule\n" +
+        "\t\t\t\multicolumn{1}{c}{k-fold} &\n" +
+        "\t\t\t\multicolumn{1}{c}{Accuracy} &\n" +
+        "\t\t\t\multicolumn{1}{c}{F1} &\n"
+        "\t\t\t\multicolumn{1}{c}{AUC ROC} \\\\\n" +
+        "\t\t\\midrule"
+    )
+
+    # body
+    for i in range(l1):
+        print(row_format.format(i + 1, accuracy[i], f1[i], roc_auc[i]) + ("[2pt]" if i == l1 - 1 else ""))
+    print("\t\t\t\\hline")
+
+    # mean
+    print(mean_format.format(np.mean(accuracy), np.mean(f1), np.mean(roc_auc)))
+    print("\t\t\\bottomrule")
+
+    # table end
+    print(
+        "\t\\end{tabular}\n" +
+        "\\end{table}\n"
+    )
+
 
 def main():
     """
@@ -150,15 +210,19 @@ def main():
     on a randomly generated classification problem.
     """
 
-    # TODO: remove
+    # experiment parameters
+    m = 5000
+    seed = 3324087230
     k = 10
 
-    # TODO: read it from the parameters of the script
-    # pick some random seed
-    seed = 3
-
     # generate the samples to work with
-    X, y = generate_data(seed)
+    X, y = generate_data(m, seed)
+
+    # train Naive Bayes
+    nb = GaussianNB()
+    nb_parameters = {}
+    nb_performances = train_classifier("Naive Bayes", nb, nb_parameters, data=(X, y), seed=seed, k=k, plot=False)
+    print_performances("Naive Bayes", nb_performances)
 
     # train SVM
     svm = SVC(kernel="rbf", class_weight="balanced")
@@ -172,22 +236,13 @@ def main():
     rf_performances = train_classifier("Random Forest", rf, rf_parameters, data=(X, y), seed=seed, k=k, plot=True)
     print_performances("Random Forest", rf_performances)
 
-    # train Naive Bayes
-    nb = GaussianNB()
-    nb_parameters = {}
-    nb_performances = train_classifier("Naive Bayes", nb, nb_parameters, data=(X, y), seed=seed, k=k, plot=False)
-    print_performances("Naive Bayes", nb_performances)
-
     # train Neural Network
     nn = MLPClassifier(hidden_layer_sizes=50, activation='logistic', random_state=seed)
     nn_parameters = {"max_iter": [1000]}
     nn_performances = train_classifier("Neural Network", nn, nn_parameters, data=(X, y), seed=seed, k=k, plot=False)
     print_performances("Neural Network", nn_performances)
 
-    # evaluate performances
-    print("TODO: summary of performances...")
 
-
-# Entry Point
+# main entry point
 if __name__ == "__main__":
     main()
